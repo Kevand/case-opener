@@ -1,0 +1,268 @@
+* {
+  font-family: "Comic Sans MS";
+  font-size: 1.3rem;
+  box-sizing: border-box;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+nav {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  padding-inline: 1rem;
+  justify-content: space-between;
+
+  & button {
+    animation: conic-effect 2s linear infinite;
+    padding: 1rem;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+      animation: wiggle 0.5s infinite, conic-effect 0.5s linear infinite;
+    }
+    border-image: conic-gradient(
+        from var(--angle),
+        crimson,
+        lime,
+        royalblue,
+        purple,
+        orange,
+        yellow,
+        crimson
+      )
+      1%;
+    border-image-width: 5px;
+  }
+}
+
+.money-spent {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.rolling-anim {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: openscale 5s linear;
+  pointer-events: none;
+  user-select: none;
+
+  & > div {
+    padding: 2rem;
+    background: #222;
+    color: #eee;
+
+    & div {
+      animation: openprogress 5s linear;
+      height: 50px;
+      background: linear-gradient(
+        var(--progress-angle),
+        crimson,
+        lime,
+        royalblue,
+        purple,
+        orange,
+        yellow,
+        crimson
+      );
+    }
+  }
+}
+
+@property --progress-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes openscale {
+  from {
+    transform: scale(1) rotate(0deg);
+    backdrop-filter: blur(0px);
+    filter: saturate(0) contrast(0);
+  }
+
+  to {
+    transform: scale(1.5) rotate(15deg);
+    backdrop-filter: blur(20px);
+    filter: saturate(5) contrast(5);
+  }
+}
+
+@keyframes openprogress {
+  from {
+    --progress-angle: 0deg;
+    width: 0%;
+  }
+
+  to {
+    --progress-angle: 360deg;
+    width: 100%;
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  33% {
+    transform: rotate(5deg) scale(1.1);
+  }
+
+  66% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes conic-effect {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 10vh 1fr;
+  background-color: #111;
+  color: #eee;
+}
+
+.case-queue {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  padding: 1rem;
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+
+  & span {
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}
+
+.result {
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #222;
+  padding: 1rem;
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+
+  & > div {
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    position: relative;
+
+    & .tooltip {
+      position: absolute;
+      font-size: 1rem;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      user-select: none;
+      pointer-events: none;
+      opacity: 0;
+      background: black;
+      color: white;
+      padding: 1rem;
+      z-index: 999;
+    }
+
+    &:hover {
+      & .tooltip {
+        opacity: 1;
+      }
+    }
+
+    & > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      & p {
+        font-size: 0.7rem;
+        font-weight: bold;
+        margin: 0px;
+      }
+    }
+
+    & img {
+      max-width: 75%;
+      aspect-ratio: 1/1;
+    }
+  }
+}
+
+.stats {
+  border: 2px solid #222;
+  padding: 1rem;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.covert-knife {
+  background: rgb(199, 199, 0);
+  color: black;
+}
+
+.covert {
+  background: rgb(220, 20, 60);
+  color: white;
+}
+
+.classified {
+  background: rgb(209, 73, 118);
+  color: white;
+}
+
+.restricted {
+  background: rgb(111, 0, 229);
+  color: white;
+}
+
+.mil-spec {
+  background: rgb(65, 65, 255);
+  color: white;
+}
